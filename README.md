@@ -2,4 +2,4 @@
 
 # developement 
 #### node 6.11.3
-#### npm install -g create-react-native-app
+#### npm install -g react-native-cli
