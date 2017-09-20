@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { View, TouchableHighlight, Text } from 'react-native';
 import Util from '../Util.js';
+import _ from 'underscore';
 
 class WatchFaceControl extends Component {
     constructor(props) {
@@ -9,22 +10,42 @@ class WatchFaceControl extends Component {
         this.state = {
             watchOn: false,
             startBtnText: '开始',
-            stopBtnText: '记次'
+            stopBtnText: '复位'
         };
     }
 
-    startWatch() {
+    handleStartWatch() {
         const {watchOn} = this.state;
+        const {startWatch, stopWatch} = this.props
         const startBtnText = watchOn ? '开始' : '停止';
-        const stopBtnText = watchOn ? '记次' : '复位';
-
+        const stopBtnText = watchOn ? '复位' : '记次';
+        
         this.setState({
             watchOn: !watchOn,
             startBtnText,
             stopBtnText
-        });
+        })
+        
+        if (watchOn) {
+            if (_.isFunction(stopWatch)) {
+                stopWatch();
+            }
+        } else {
+            if (_.isFunction(startWatch)) {
+                startWatch();
+            }               
+        }
+
     }
 
+    handleRecordWatch() {        
+        const {recordWatch} = this.props;
+        const {watchOn} = this.state;
+        
+        if (_.isFunction(recordWatch)) {
+            recordWatch(watchOn)
+        }
+    }
 
     render() {
         const {startBtnText, stopBtnText} = this.state
@@ -32,18 +53,24 @@ class WatchFaceControl extends Component {
         return (
             <View style={styles.watchFaceControl}>
                 <View style={{ flex: 1, alignItems: 'flex-start' }}>
-                    <TouchableHighlight style={styles.btnStart} underlayColor='#eee' onPress={() => this.startWatch()}>
+                    <TouchableHighlight style={styles.btnStart} underlayColor='#eee' onPress={() => this.handleStartWatch()}>
                         <Text style={styles.btnStartText}>{startBtnText}</Text>
                     </TouchableHighlight>
                 </View>
                 <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                    <TouchableHighlight style={styles.btnStop} underlayColor='#eee' onPress={() => { }}>
+                    <TouchableHighlight style={styles.btnStop} underlayColor='#eee' onPress={() => this.handleRecordWatch()}>
                         <Text style={styles.btnStopText}>{stopBtnText}</Text>
                     </TouchableHighlight>
                 </View>
             </View>
         );
     };
+}
+
+
+WatchFaceControl.prototypes = {
+    startWatch: PropTypes.func.isRequired,
+    stopWatch: PropTypes.func.isRequired
 }
 
 const styles = {
