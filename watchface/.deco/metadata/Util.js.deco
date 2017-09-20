@@ -1,0 +1,49 @@
+{
+	"liveValues": [
+		{
+			"range": {
+				"from": {
+					"line": 1,
+					"ch": 23
+				},
+				"to": {
+					"line": 1,
+					"ch": 35
+				}
+			},
+			"editWith": "inputField",
+			"type": "string",
+			"name": "String"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 5,
+					"ch": 30
+				},
+				"to": {
+					"line": 5,
+					"ch": 38
+				}
+			},
+			"editWith": "inputField",
+			"type": "string",
+			"name": "String"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 6,
+					"ch": 31
+				},
+				"to": {
+					"line": 6,
+					"ch": 39
+				}
+			},
+			"editWith": "inputField",
+			"type": "string",
+			"name": "String"
+		}
+	]
+}

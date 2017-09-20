@@ -14,6 +14,8 @@ import {
 } from 'react-native';
 import WatchFace from './js/WatchFace.js';
 import WatchFaceControl from './js/WatchFaceControl.js';
+import WatchRecord from './js/WatchRecord.js';
+import TimeRecord from './modal/TimeRecord.js';
 export default class watchface extends Component {
 
   constructor(props) {
@@ -27,7 +29,8 @@ export default class watchface extends Component {
       timeAccumulation: 0,
       recordTime:0,
       sectionTime: '00:00:00',
-      totalTime: '00:00:00'
+      totalTime: '00:00:00',
+      recordList: []
     }
   }
 
@@ -80,12 +83,17 @@ export default class watchface extends Component {
   }
 
   handleRecordWatch(watchOn) {
+    
     if (watchOn) { //点击记次
+      const {sectionTime ,recordList} = this.state;
+      const timeRecord = new TimeRecord({title: '计次'+recordList.length, time:sectionTime})
+      recordList.unshift(timeRecord)
+
       this.setState({
         resetWatch: false,
+        recordList
       })
-      var arrar = []
-      arrar.push(this.state.sectionTime)
+
     } else {  //点击复位    
       this.setState({
         initialTime: 0,
@@ -95,18 +103,20 @@ export default class watchface extends Component {
         timeAccumulation: 0,
         recordTime:0,
         sectionTime: '00:00:00',
-        totalTime: '00:00:00'
+        totalTime: '00:00:00',
+        recordList: []
       });
     }
   }
 
   render() {
-    const {sectionTime, totalTime} = this.state
+    const {sectionTime, totalTime, recordList} = this.state
 
     return (
       <View style={Styles.watchContainer}>
         <WatchFace sectionTime={sectionTime} totalTime={totalTime}/>
         <WatchFaceControl startWatch={this.handleStartWatch.bind(this)} stopWatch={this.handleStopWatch.bind(this)} recordWatch={this.handleRecordWatch.bind(this)} />
+        <WatchRecord timeList={recordList}/>
       </View>
     );
   }
