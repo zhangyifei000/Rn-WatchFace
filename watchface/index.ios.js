@@ -53,13 +53,15 @@ export default class watchface extends Component {
           this.setState({
             currentTime: (new Date()).getTime()
           })
-          countingTime = this.state.timeAccumulation + this.state.currentTime - this.state.initialTime;
-          minute = Math.floor(countingTime/(60*1000));
-          second = Math.floor((countingTime-6000*minute)/1000);
+          countingTime = this.state.timeAccumulation + this.state.currentTime + 10 - this.state.initialTime;
+          const min = countingTime/(60*1000)
+          minute = Math.floor(min);
+          second = Math.floor((min*60)%60);
           milSecond = Math.floor((countingTime%1000)/10);
           seccountingTime = countingTime - this.state.recordTime;
-          secminute = Math.floor(seccountingTime/(60*1000));
-          secsecond = Math.floor((seccountingTime-6000*secminute)/1000);
+          const secMin = seccountingTime/(60*1000)
+          secminute = Math.floor(secMin);
+          secsecond = Math.floor((secMin*60)%60);
           secmilSecond = Math.floor((seccountingTime%1000)/10);
           this.setState({
             totalTime: (minute<10? "0"+minute:minute)+":"+(second<10? "0"+second:second)+"."+(milSecond<10? "0"+milSecond:milSecond),
@@ -84,12 +86,13 @@ export default class watchface extends Component {
   handleRecordWatch(watchOn) {
     
     if (watchOn) { //点击记次
-      const {sectionTime ,recordList} = this.state;
+      const {sectionTime ,recordList, timeAccumulation, currentTime,initialTime} = this.state;
       const timeRecord = new TimeRecord({title: '计次'+recordList.length, time:sectionTime})
       recordList.unshift(timeRecord)
 
       this.setState({
         resetWatch: false,
+        recordTime: timeAccumulation + currentTime - initialTime,
         recordList
       })
 
