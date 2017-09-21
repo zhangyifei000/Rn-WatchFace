@@ -16,6 +16,7 @@ class WatchRecord extends Component {
         return(
             <ListView 
                 style={styles.recordList}
+                enableEmptySections={true} 
                 dataSource={dataSource}
                 renderRow={(rowData) => 
                     <View style={styles.recordItem}>
@@ -58,14 +59,14 @@ const styles = {
         paddingLeft: 20,
         width: '30%',
         textAlign: 'left',
-        textColor: '#777'
+        color: '#777'
     },
     time: {
         backgroundColor:'transparent',
         textAlign: 'center',
         width: '50%',
         paddingRight: 20,
-        textColor: '#222'
+        color: '#222'
     }
 }
 
