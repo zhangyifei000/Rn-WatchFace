@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 import _ from 'underscore';
-import Styles from './styles/style.js';
 import {
   AppRegistry,
   Text,
@@ -113,12 +112,20 @@ export default class watchface extends Component {
     const {sectionTime, totalTime, recordList} = this.state
 
     return (
-      <View style={Styles.watchContainer}>
+      <View style={styles.watchContainer}>
         <WatchFace sectionTime={sectionTime} totalTime={totalTime}/>
         <WatchFaceControl startWatch={this.handleStartWatch.bind(this)} stopWatch={this.handleStopWatch.bind(this)} recordWatch={this.handleRecordWatch.bind(this)} />
         <WatchRecord timeList={recordList}/>
       </View>
     );
+  }
+}
+
+const styles = {
+  watchContainer: {
+    alignItems: 'center',
+    backgroundColor: '#f3f3f3',
+    marginTop: 60
   }
 }
 

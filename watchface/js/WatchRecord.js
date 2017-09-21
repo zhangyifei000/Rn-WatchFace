@@ -38,8 +38,9 @@ WatchRecord.propTypes = {
 const styles = {
     recordList:{
         width: Util.size.width,
-        height: '100%',
-        paddingLeft: 10
+        height: Util.size.height - 330, //330分别是 170 + 60 + 100 上面的高度
+        paddingLeft: 10,
+        backgroundColor: 'white'
     },
     recordItem:{
         height: 40,
